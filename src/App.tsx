@@ -51,19 +51,19 @@ function App() {
     },
     {
       category: 'Architecture',
-      items: ['Microservices', 'Domain-Driven Design', 'Event-Driven']
+      items: ['Microservices', 'DDD', 'Event-Driven']
     },
     {
-      category: 'DevOps & Tools',
-      items: ['Docker', 'CI/CD', 'Git', 'Azure DevOps', 'UiPath RPA']
+      category: 'DevOps',
+      items: ['Docker', 'CI/CD', 'Git', 'Azure DevOps', 'UiPath']
     },
     {
-      category: 'Domain Knowledge',
-      items: ['MES', 'ERP', 'HRIS', 'Retail SaaS', 'POS System']
+      category: 'Domain',
+      items: ['MES', 'ERP', 'HRIS', 'Retail SaaS', 'POS']
     },
     {
-      category: 'Soft Skills',
-      items: ['System Analysis', 'Cross-team Communication', 'Project Management']
+      category: 'SoftSkills',
+      items: ['System Analysis', 'Communication', 'PM']
     }
   ]
 
@@ -71,12 +71,12 @@ function App() {
     <>
       {/* Navigation */}
       <nav className="nav">
-        <div className="nav-logo">Larry Lai</div>
+        <div className="nav-logo">larry.lai</div>
         <ul className="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about">about()</a></li>
+          <li><a href="#skills">skills()</a></li>
+          <li><a href="#experience">experience()</a></li>
+          <li><a href="#contact">contact()</a></li>
         </ul>
       </nav>
 
@@ -89,15 +89,16 @@ function App() {
           8 年後端開發與系統分析經驗。擅長從使用者需求與商業邏輯角度思考系統設計，
           在團隊中擔任技術與業務端的溝通橋樑，把複雜的需求理清楚，讓團隊能順暢開發。
         </p>
+        <p className="hero-close">{"}"}</p>
         <div className="hero-buttons">
-          <a href="#contact" className="btn btn-primary">Contact Me</a>
-          <a href="#experience" className="btn btn-outline">View Experience</a>
+          <a href="#contact" className="btn btn-primary">contact()</a>
+          <a href="#experience" className="btn btn-outline">viewExperience()</a>
         </div>
       </section>
 
       {/* About Section */}
       <section id="about" className="about">
-        <h2>About Me</h2>
+        <h2>about</h2>
         <div className="about-content">
           <p className="about-text">
             從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術棧的演進
@@ -112,15 +113,15 @@ function App() {
           <div className="about-highlights">
             <div className="highlight-card">
               <div className="highlight-number">8+</div>
-              <div className="highlight-label">Years Experience</div>
+              <div className="highlight-label">years_experience</div>
             </div>
             <div className="highlight-card">
               <div className="highlight-number">6</div>
-              <div className="highlight-label">Companies</div>
+              <div className="highlight-label">companies</div>
             </div>
             <div className="highlight-card">
               <div className="highlight-number">2</div>
-              <div className="highlight-label">Tech Stacks</div>
+              <div className="highlight-label">tech_stacks</div>
             </div>
           </div>
         </div>
@@ -128,7 +129,7 @@ function App() {
 
       {/* Skills Section */}
       <section id="skills">
-        <h2>Skills</h2>
+        <h2>skills</h2>
         <div className="skills-grid">
           {skills.map((skill, index) => (
             <div key={index} className="skill-category">
@@ -145,7 +146,7 @@ function App() {
 
       {/* Experience Section */}
       <section id="experience" className="experience">
-        <h2>Experience</h2>
+        <h2>experience</h2>
         <div className="timeline">
           {experiences.map((exp, index) => (
             <div key={index} className="timeline-item">
@@ -160,14 +161,14 @@ function App() {
 
       {/* Contact Section */}
       <section id="contact">
-        <h2>Contact</h2>
+        <h2>contact</h2>
         <div className="contact-content">
           <p className="contact-text">
             對合作機會有興趣？歡迎透過以下方式聯繫我。
           </p>
           <div className="contact-links">
             <a href="mailto:abc081259@gmail.com" className="contact-link">
-              abc081259@gmail.com
+              email: abc081259@gmail.com
             </a>
             <a
               href="https://www.linkedin.com/in/larrylai622"
@@ -175,7 +176,7 @@ function App() {
               rel="noopener noreferrer"
               className="contact-link"
             >
-              LinkedIn
+              linkedin: /in/larrylai622
             </a>
           </div>
         </div>
@@ -183,7 +184,7 @@ function App() {
 
       {/* Footer */}
       <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} Larry Lai. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Larry Lai | Built with React + Vite</p>
       </footer>
     </>
   )
