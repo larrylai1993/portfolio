@@ -1,6 +1,12 @@
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './App.css'
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
+  const [navScrolled, setNavScrolled] = useState(false)
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
   const experiences = [
     {
       date: '2024.07 - Present',
@@ -67,123 +73,246 @@ function App() {
     }
   ]
 
+  // Handle scroll for nav background
+  useEffect(() => {
+    const handleScroll = () => {
+      setNavScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Intersection Observer for active section
+  useEffect(() => {
+    const sections = document.querySelectorAll('section[id]')
+    
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: '-50% 0px -50% 0px' }
+    )
+
+    sections.forEach((section) => {
+      observerRef.current?.observe(section)
+    })
+
+    return () => observerRef.current?.disconnect()
+  }, [])
+
+  // Scroll animation observer
+  useEffect(() => {
+    const scrollElements = document.querySelectorAll('.scroll-animate')
+    
+    const scrollObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    scrollElements.forEach((el) => scrollObserver.observe(el))
+
+    return () => scrollObserver.disconnect()
+  }, [])
+
+  // Close mobile menu on navigation
+  const handleNavClick = useCallback(() => {
+    setMobileMenuOpen(false)
+  }, [])
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
+  const navLinks = [
+    { href: '#about', label: 'about()' },
+    { href: '#skills', label: 'skills()' },
+    { href: '#experience', label: 'experience()' },
+    { href: '#contact', label: 'contact()' }
+  ]
+
   return (
     <>
+      {/* Skip Link for Accessibility */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
       {/* Navigation */}
-      <nav className="nav">
-        <div className="nav-logo">larry.lai</div>
+      <nav className={`nav ${navScrolled ? 'scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+        <a href="#" className="nav-logo" aria-label="Go to top">larry.lai</a>
+        
         <ul className="nav-links">
-          <li><a href="#about">about()</a></li>
-          <li><a href="#skills">skills()</a></li>
-          <li><a href="#experience">experience()</a></li>
-          <li><a href="#contact">contact()</a></li>
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a 
+                href={link.href}
+                className={activeSection === link.href.slice(1) ? 'active' : ''}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
         </ul>
+
+        <button
+          className={`nav-toggle ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero">
-        <p className="hero-subtitle">Senior Backend Developer</p>
-        <h1>Larry Lai</h1>
-        <p className="hero-title">.NET Core & Ruby on Rails | System Analysis</p>
-        <p className="hero-description">
-          8 年後端開發與系統分析經驗。擅長從使用者需求與商業邏輯角度思考系統設計，
-          在團隊中擔任技術與業務端的溝通橋樑，把複雜的需求理清楚，讓團隊能順暢開發。
-        </p>
-        <p className="hero-close">{"}"}</p>
-        <div className="hero-buttons">
-          <a href="#contact" className="btn btn-primary">contact()</a>
-          <a href="#experience" className="btn btn-outline">viewExperience()</a>
-        </div>
-      </section>
+      {/* Mobile Menu */}
+      <div 
+        id="mobile-menu"
+        className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}
+        aria-hidden={!mobileMenuOpen}
+      >
+        <ul>
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a href={link.href} onClick={handleNavClick}>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      {/* About Section */}
-      <section id="about" className="about">
-        <h2>about</h2>
-        <div className="about-content">
-          <p className="about-text">
-            從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術棧的演進
-            （從早期的 ASP/VB、WinForms 到現代化的 .NET Core），
-            並能在 .NET 與 Ruby on Rails 之間靈活切換。
+      <main id="main-content">
+        {/* Hero Section */}
+        <section className="hero" aria-label="Introduction">
+          <p className="hero-subtitle">Senior Backend Developer</p>
+          <h1>Larry Lai</h1>
+          <p className="hero-title">.NET Core &amp; Ruby on Rails | System Analysis</p>
+          <p className="hero-description">
+            8 年後端開發與系統分析經驗。擅長從使用者需求與商業邏輯角度思考系統設計，
+            在團隊中擔任技術與業務端的溝通橋樑，把複雜的需求理清楚，讓團隊能順暢開發。
           </p>
-          <p className="about-text">
-            很多時候專案窒礙難行不是技術無法實現，而是需求不明確或業務流程不順。
-            我擅長處理這些模糊地帶，把每個人的意見做整合，找出破口，
-            確保交付的東西真正符合公司發展需要、也符合客戶需要。
-          </p>
-          <div className="about-highlights">
-            <div className="highlight-card">
-              <div className="highlight-number">8+</div>
-              <div className="highlight-label">years_experience</div>
-            </div>
-            <div className="highlight-card">
-              <div className="highlight-number">6</div>
-              <div className="highlight-label">companies</div>
-            </div>
-            <div className="highlight-card">
-              <div className="highlight-number">2</div>
-              <div className="highlight-label">tech_stacks</div>
-            </div>
+          <p className="hero-close">{"}"}</p>
+          <div className="hero-buttons">
+            <a href="#contact" className="btn btn-primary">contact()</a>
+            <a href="#experience" className="btn btn-outline">viewExperience()</a>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Skills Section */}
-      <section id="skills">
-        <h2>skills</h2>
-        <div className="skills-grid">
-          {skills.map((skill, index) => (
-            <div key={index} className="skill-category">
-              <h3>{skill.category}</h3>
-              <div className="skill-tags">
-                {skill.items.map((item, i) => (
-                  <span key={i} className="skill-tag">{item}</span>
-                ))}
+        {/* About Section */}
+        <section id="about" className="about scroll-animate" aria-label="About me">
+          <h2>about</h2>
+          <div className="about-content">
+            <p className="about-text">
+              從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術棧的演進
+              （從早期的 ASP/VB、WinForms 到現代化的 .NET Core），
+              並能在 .NET 與 Ruby on Rails 之間靈活切換。
+            </p>
+            <p className="about-text">
+              很多時候專案窒礙難行不是技術無法實現，而是需求不明確或業務流程不順。
+              我擅長處理這些模糊地帶，把每個人的意見做整合，找出破口，
+              確保交付的東西真正符合公司發展需要、也符合客戶需要。
+            </p>
+            <div className="about-highlights">
+              <div className="highlight-card">
+                <div className="highlight-number">8+</div>
+                <div className="highlight-label">years_experience</div>
+              </div>
+              <div className="highlight-card">
+                <div className="highlight-number">6</div>
+                <div className="highlight-label">companies</div>
+              </div>
+              <div className="highlight-card">
+                <div className="highlight-number">2</div>
+                <div className="highlight-label">tech_stacks</div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="experience">
-        <h2>experience</h2>
-        <div className="timeline">
-          {experiences.map((exp, index) => (
-            <div key={index} className="timeline-item">
-              <div className="timeline-date">{exp.date}</div>
-              <div className="timeline-title">{exp.title}</div>
-              <div className="timeline-company">{exp.company}</div>
-              <div className="timeline-description">{exp.description}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact">
-        <h2>contact</h2>
-        <div className="contact-content">
-          <p className="contact-text">
-            對合作機會有興趣？歡迎透過以下方式聯繫我。
-          </p>
-          <div className="contact-links">
-            <a href="mailto:abc081259@gmail.com" className="contact-link">
-              email: abc081259@gmail.com
-            </a>
-            <a
-              href="https://www.linkedin.com/in/larrylai622"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contact-link"
-            >
-              linkedin: /in/larrylai622
-            </a>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" className="scroll-animate" aria-label="Technical skills">
+          <h2>skills</h2>
+          <div className="skills-grid">
+            {skills.map((skill, index) => (
+              <div key={index} className="skill-category">
+                <h3>{skill.category}</h3>
+                <div className="skill-tags" role="list">
+                  {skill.items.map((item, i) => (
+                    <span key={i} className="skill-tag" role="listitem">{item}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Experience Section */}
+        <section id="experience" className="experience scroll-animate" aria-label="Work experience">
+          <h2>experience</h2>
+          <div className="timeline" role="list" aria-label="Career timeline">
+            {experiences.map((exp, index) => (
+              <article key={index} className="timeline-item" role="listitem">
+                <time className="timeline-date">{exp.date}</time>
+                <h3 className="timeline-title">{exp.title}</h3>
+                <div className="timeline-company">{exp.company}</div>
+                <p className="timeline-description">{exp.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="scroll-animate" aria-label="Contact information">
+          <h2>contact</h2>
+          <div className="contact-content">
+            <p className="contact-text">
+              對合作機會有興趣？歡迎透過以下方式聯繫我。
+            </p>
+            <div className="contact-links">
+              <a 
+                href="mailto:abc081259@gmail.com" 
+                className="contact-link"
+                aria-label="Send email to abc081259@gmail.com"
+              >
+                ✉️ abc081259@gmail.com
+              </a>
+              <a
+                href="https://www.linkedin.com/in/larrylai622"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-link"
+                aria-label="Visit LinkedIn profile (opens in new tab)"
+              >
+                💼 linkedin.com/in/larrylai622
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="footer">
+      <footer className="footer" role="contentinfo">
         <p>© {new Date().getFullYear()} Larry Lai | Built with React + Vite</p>
       </footer>
     </>
