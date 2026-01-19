@@ -5,44 +5,63 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [navScrolled, setNavScrolled] = useState(false)
+  const [expandedExp, setExpandedExp] = useState<number | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   const experiences = [
     {
       date: '2024.07 - Present',
       title: 'Senior Software Engineer',
-      company: 'CYBERBIZ CORPORATION',
-      description: '零售電商 SaaS 平台後端開發'
+      company: 'CYBERBIZ',
+      initials: 'CB',
+      description: '零售電商 SaaS 平台後端開發',
+      highlights: ['核心系統功能開發與維護', '跨團隊協作與系統整合'],
+      tech: ['Ruby on Rails', '.NET Core', 'PostgreSQL', 'Redis']
     },
     {
       date: '2022.11 - 2024.06',
       title: 'System Analyst',
       company: 'NEC Taiwan',
-      description: '主導核心系統架構與全端開發，負責進銷存、促銷及採購等關鍵模組；設計並導入微服務架構於會員系統。建構完整 CI/CD 流水線，主導 RPA 導入專案，利用 UiPath 優化會計作業流程，為每位員工每日節省約 3 小時工時。'
+      initials: 'NEC',
+      description: '主導核心系統架構設計與 Full-stack 開發',
+      highlights: ['Microservices 架構設計', 'CI/CD Pipeline 建置'],
+      tech: ['.NET Core', 'Angular', 'MSSQL', 'Docker']
     },
     {
       date: '2021.03 - 2022.11',
-      title: 'Project Manager / System Engineer',
-      company: 'Jardine Restaurant Group',
-      description: '負責 KFC Kiosk 系統的產品路線規劃與專案排程，主導系統穩定性優化專案，改善部署流程與品質把關。同時負責內部營運系統的全端開發與第三方串接，導入 RPA 技術優化 HR 行政流程。'
+      title: 'PM / System Engineer',
+      company: 'Jardine Restaurant',
+      initials: 'JRG',
+      description: '系統產品規劃與專案管理',
+      highlights: ['產品規劃與時程管理', 'RPA 導入與流程自動化'],
+      tech: ['.NET Core', 'Vue', 'MSSQL']
     },
     {
       date: '2019.12 - 2021.03',
       title: 'Application Developer',
       company: 'Bluebell Group',
-      description: '負責數位化轉型，執行從 .NET Framework 到 .NET Core 的現代化專案。開發商品管理與結帳系統核心模組，並針對資料庫進行 SQL Stored Procedures 效能調校。'
+      initials: 'BB',
+      description: '.NET Framework → .NET Core Migration',
+      highlights: ['核心模組開發', 'Database 效能調校'],
+      tech: ['.NET Core', 'MSSQL', 'Entity Framework']
     },
     {
       date: '2018.01 - 2019.12',
       title: 'MES Engineer',
-      company: 'Chroma ATE Inc.',
-      description: '參與太陽能薄膜電池與隱形眼鏡產業的 MES 導入專案，負責產線設備與資訊系統的深度整合，實作多品牌機台資料交握，開發即時廠區監控與報表模組。'
+      company: 'Chroma ATE',
+      initials: 'CA',
+      description: '製造業 MES 系統導入',
+      highlights: ['設備整合與資料交握', 'Real-time 監控系統開發'],
+      tech: ['.NET Framework', 'MSSQL', 'Oracle']
     },
     {
       date: '2016.08 - 2018.01',
-      title: 'IT Engineer',
-      company: '強國企業',
-      description: 'ERP 系統功能翻新與 HRIS 開發維護，完成薪酬計算公式重構專案，推動越南各廠指紋機上線與系統串接，優化報表效能，產出時間縮短近半小時。'
+      title: 'System Engineer',
+      company: 'Chian Kuo Enterprise',
+      initials: 'CK',
+      description: 'ERP / HRIS 系統開發維護',
+      highlights: ['跨廠區系統開發與整合', 'Report 效能優化'],
+      tech: ['.NET Framework', 'VB.NET', 'MSSQL']
     }
   ]
 
@@ -205,17 +224,16 @@ function App() {
       <main id="main-content">
         {/* Hero Section */}
         <section className="hero" aria-label="Introduction">
-          <p className="hero-subtitle">Senior Backend Developer</p>
-          <h1>Larry Lai</h1>
-          <p className="hero-title">.NET Core &amp; Ruby on Rails | System Analysis</p>
-          <p className="hero-description">
-            8 年後端開發與系統分析經驗。擅長從使用者需求與商業邏輯角度思考系統設計，
-            在團隊中擔任技術與業務端的溝通橋樑，把複雜的需求理清楚，讓團隊能順暢開發。
+          <h1 className="hero-name">Larry Lai</h1>
+          <p className="hero-role">Senior Backend Developer</p>
+          <p className="hero-stack">.NET Core • Ruby on Rails • System Analysis</p>
+          <p className="hero-bio">
+            8 年後端開發經驗，擅長系統分析與架構設計。<br />
+            從 MES、ERP 到零售 SaaS，在技術與業務之間搭建橋樑。
           </p>
-          <p className="hero-close">{"}"}</p>
           <div className="hero-buttons">
-            <a href="#contact" className="btn btn-primary">contact()</a>
-            <a href="#experience" className="btn btn-outline">viewExperience()</a>
+            <a href="#contact" className="btn btn-primary">Contact Me</a>
+            <a href="#experience" className="btn btn-outline">View Experience</a>
           </div>
         </section>
 
@@ -224,7 +242,7 @@ function App() {
           <h2>about</h2>
           <div className="about-content">
             <p className="about-text">
-              從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術棧的演進
+              從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術的演進
               （從早期的 ASP/VB、WinForms 到現代化的 .NET Core），
               並能在 .NET 與 Ruby on Rails 之間靈活切換。
             </p>
@@ -236,15 +254,15 @@ function App() {
             <div className="about-highlights">
               <div className="highlight-card">
                 <div className="highlight-number">8+</div>
-                <div className="highlight-label">years_experience</div>
+                <div className="highlight-label">Years Experience</div>
               </div>
               <div className="highlight-card">
                 <div className="highlight-number">6</div>
-                <div className="highlight-label">companies</div>
+                <div className="highlight-label">Companies</div>
               </div>
               <div className="highlight-card">
                 <div className="highlight-number">2</div>
-                <div className="highlight-label">tech_stacks</div>
+                <div className="highlight-label">Tech Stacks</div>
               </div>
             </div>
           </div>
@@ -270,13 +288,37 @@ function App() {
         {/* Experience Section */}
         <section id="experience" className="experience scroll-animate" aria-label="Work experience">
           <h2>experience</h2>
-          <div className="timeline" role="list" aria-label="Career timeline">
+          <div className="exp-accordion">
             {experiences.map((exp, index) => (
-              <article key={index} className="timeline-item" role="listitem">
-                <time className="timeline-date">{exp.date}</time>
-                <h3 className="timeline-title">{exp.title}</h3>
-                <div className="timeline-company">{exp.company}</div>
-                <p className="timeline-description">{exp.description}</p>
+              <article 
+                key={index} 
+                className={`exp-accordion-item ${expandedExp === index ? 'expanded' : ''}`}
+              >
+                <button 
+                  className="exp-accordion-header"
+                  onClick={() => setExpandedExp(expandedExp === index ? null : index)}
+                  aria-expanded={expandedExp === index}
+                >
+                  <div className="exp-accordion-info">
+                    <span className="exp-accordion-title">{exp.title}</span>
+                    <span className="exp-accordion-company">{exp.company}</span>
+                  </div>
+                  <div className="exp-accordion-right">
+                    <time className="exp-accordion-date">{exp.date}</time>
+                    <span className="exp-accordion-icon">{expandedExp === index ? '−' : '+'}</span>
+                  </div>
+                </button>
+                <div className="exp-accordion-content">
+                  <p>{exp.description}</p>
+                  {exp.highlights && (
+                    <ul>
+                      {exp.highlights.map((h, i) => <li key={i}>{h}</li>)}
+                    </ul>
+                  )}
+                  <div className="exp-accordion-tech">
+                    {exp.tech?.map((t, i) => <span key={i}>{t}</span>)}
+                  </div>
+                </div>
               </article>
             ))}
           </div>
