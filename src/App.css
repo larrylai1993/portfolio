@@ -232,11 +232,25 @@
   box-shadow: 0 4px 20px rgba(204, 120, 50, 0.2);
 }
 
+/* Global Styles for Full Page Scroll */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
 /* Global Section Headers */
 section {
   padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh; /* Full Height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical Center */
+  scroll-snap-align: start; /* Snap to top */
+  scroll-snap-stop: always; /* Force stop at each section */
+  position: relative;
 }
 
 section h2 {
@@ -258,7 +272,30 @@ section h2::before {
   font-size: 1.5rem;
 }
 
-/* About Section */
+/* Footer adjustment */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  background: transparent;
+  scroll-snap-align: end; /* Snap footer */
+}
+
+/* Enhanced Scroll Animations */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(50px);
+  filter: blur(10px); /* Add blur effect */
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* Elegant easing */
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
 .about {
   background: transparent;
   border: none;
@@ -591,29 +628,6 @@ section h2::before {
   border-color: var(--accent);
   color: var(--accent-secondary);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 1.5rem;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  border-top: 1px solid var(--border);
-  background: transparent;
-}
-
-/* Scroll Animations */
-.scroll-animate {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity var(--transition-slow) var(--ease-out-expo),
-              transform var(--transition-slow) var(--ease-out-expo);
-}
-
-.scroll-animate.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Mobile Menu */
