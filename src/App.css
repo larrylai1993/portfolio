@@ -13,11 +13,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background var(--transition-normal), box-shadow var(--transition-normal);
+  align-items: center;
+  transition: all 0.3s ease; /* Enable transition for transform (hide/show) */
 }
 
 .nav.scrolled {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Smart Hide Navigation */
+.nav.nav-hidden {
+  transform: translateY(-100%);
 }
 
 .nav-logo {

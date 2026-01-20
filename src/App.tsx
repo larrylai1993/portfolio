@@ -4,6 +4,8 @@ import './App.css'
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [navVisible, setNavVisible] = useState(true)
+  const lastScrollY = useRef(0)
   const [navScrolled, setNavScrolled] = useState(false)
   const [expandedExp, setExpandedExp] = useState<number | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -92,12 +94,26 @@ function App() {
     }
   ]
 
-  // Handle scroll for nav background
+  // Handle scroll for nav background and visibility
   useEffect(() => {
     const handleScroll = () => {
       const container = document.getElementById('snap-container')
       if (container) {
-        setNavScrolled(container.scrollTop > 50)
+        const currentScrollY = container.scrollTop
+        
+        // Determine background state
+        setNavScrolled(currentScrollY > 50)
+        
+        // Determine visibility (Smart Nav)
+        if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+          // Scrolling DOWN and past threshold -> Hide
+          setNavVisible(false)
+        } else {
+          // Scrolling UP -> Show
+          setNavVisible(true)
+        }
+        
+        lastScrollY.current = currentScrollY
       }
     }
     
@@ -182,7 +198,11 @@ function App() {
       </a>
 
       {/* Navigation */}
-      <nav className={`nav ${navScrolled ? 'scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+      <nav 
+        className={`nav ${navScrolled ? 'scrolled' : ''} ${!navVisible ? 'nav-hidden' : ''}`} 
+        role="navigation" 
+        aria-label="Main navigation"
+      >
         <a href="#" className="nav-logo" aria-label="Go to top">larry.lai</a>
         
         <ul className="nav-links">
