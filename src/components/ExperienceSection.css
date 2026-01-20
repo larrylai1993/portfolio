@@ -1,0 +1,282 @@
+/* Experience Section Specific Styles */
+
+.experience-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  position: relative;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.timeline-item:hover,
+.timeline-item.active {
+  opacity: 1;
+}
+
+/* Timeline Left Side */
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+  padding-top: 0.5rem;
+}
+
+.timeline-date {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--accent-secondary);
+  text-align: right;
+  margin-right: 1.5rem;
+  white-space: nowrap;
+}
+
+.timeline-marker {
+  position: absolute;
+  right: -6px;
+  top: 0.6rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 2px solid var(--accent);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.timeline-connector {
+  position: absolute;
+  top: 1.5rem;
+  bottom: -3.5rem; /* Extends to next item */
+  right: -1px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.timeline-item:last-child .timeline-connector {
+  display: none;
+}
+
+/* Timeline Content */
+.timeline-content {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.timeline-item:hover .timeline-content {
+  background: rgba(35, 35, 35, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Job Header */
+.job-header {
+  margin-bottom: 0.75rem;
+}
+
+.job-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.job-company {
+  font-family: 'Fira Code', monospace;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.job-type {
+  color: var(--green); /* Using a "String" color or similar */
+  opacity: 0.7;
+}
+
+/* Description */
+.job-description {
+  margin-bottom: 1.5rem;
+}
+
+.comment-syntax {
+  color: #6a9955; /* VS Code Comment Color */
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  display: block;
+}
+
+/* Impact Grid */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.impact-card {
+  background: rgba(0, 0, 0, 0.2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.impact-card:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.impact-header {
+  margin-bottom: 0.5rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+}
+
+.method-name {
+  color: var(--yellow); /* Method color */
+}
+
+.paren {
+  color: var(--text-secondary);
+}
+
+.impact-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.impact-metric {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.metric-arrow {
+  color: var(--purple);
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.metric-value {
+  color: var(--green); /* String value */
+  font-weight: 500;
+}
+
+/* Mini Tags */
+.impact-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mini-tag {
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  color: var(--text-secondary);
+}
+
+/* Tech Stack Footer */
+.job-tech {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  word-break: break-all;
+}
+
+.keyword-const {
+  color: var(--purple);
+}
+
+.variable-stack {
+  color: var(--cyan);
+}
+
+.tech-item {
+  color: var(--green);
+  margin-right: 0.3rem;
+}
+
+/* Mobile Date - Hidden by default */
+.mobile-date {
+  display: none;
+  color: var(--accent-secondary);
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .timeline-container {
+    padding-left: 0;
+    gap: 1.5rem;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 20px 1fr; /* Keep side-by-side but narrow left */
+    gap: 1rem;
+  }
+
+  .timeline-left {
+    padding-top: 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Hide the left-side date on mobile */
+  .timeline-left .timeline-date {
+    display: none;
+  }
+
+  /* Show the in-card date on mobile */
+  .mobile-date {
+    display: inline;
+  }
+
+  .timeline-marker {
+    right: auto;
+    left: 4px; /* Center in the 20px col */
+    top: 6px;
+  }
+
+  .timeline-connector {
+    right: auto;
+    left: 9px; /* Center of marker */
+    top: 1rem; /* Below marker */
+    bottom: -1.5rem;
+  }
+}

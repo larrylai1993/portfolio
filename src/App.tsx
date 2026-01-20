@@ -1,63 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import ExperienceSection from './components/ExperienceSection'
 import './App.css'
 
 
-const experiences = [
-  {
-    date: '2024.07 - Present',
-    title: 'Senior Software Engineer',
-    company: 'CYBERBIZ',
-    initials: 'CB',
-    description: '零售電商 SaaS 平台後端開發',
-    highlights: ['核心系統功能開發與維護', '跨團隊協作與系統整合'],
-    tech: ['Ruby on Rails', '.NET Core', 'PostgreSQL', 'Redis']
-  },
-  {
-    date: '2022.11 - 2024.06',
-    title: 'System Analyst',
-    company: 'NEC Taiwan',
-    initials: 'NEC',
-    description: '主導核心系統架構設計與 Full-stack 開發',
-    highlights: ['Microservices 架構設計', 'CI/CD Pipeline 建置'],
-    tech: ['.NET Core', 'Angular', 'MSSQL', 'Docker']
-  },
-  {
-    date: '2021.03 - 2022.11',
-    title: 'PM / System Engineer',
-    company: 'Jardine Restaurant',
-    initials: 'JRG',
-    description: '系統產品規劃與專案管理',
-    highlights: ['產品規劃與時程管理', 'RPA 導入與流程自動化'],
-    tech: ['.NET Core', 'Vue', 'MSSQL']
-  },
-  {
-    date: '2019.12 - 2021.03',
-    title: 'Application Developer',
-    company: 'Bluebell Group',
-    initials: 'BB',
-    description: '.NET Framework → .NET Core Migration',
-    highlights: ['核心模組開發', 'Database 效能調校'],
-    tech: ['.NET Core', 'MSSQL', 'Entity Framework']
-  },
-  {
-    date: '2018.01 - 2019.12',
-    title: 'MES Engineer',
-    company: 'Chroma ATE',
-    initials: 'CA',
-    description: '製造業 MES 系統導入',
-    highlights: ['設備整合與資料交握', 'Real-time 監控系統開發'],
-    tech: ['.NET Framework', 'MSSQL', 'Oracle']
-  },
-  {
-    date: '2016.08 - 2018.01',
-    title: 'System Engineer',
-    company: 'Chian Kuo Enterprise',
-    initials: 'CK',
-    description: 'ERP / HRIS 系統開發維護',
-    highlights: ['跨廠區系統開發與整合', 'Report 效能優化'],
-    tech: ['.NET Framework', 'VB.NET', 'MSSQL']
-  }
-]
+
 
 const skills = [
   {
@@ -90,7 +36,6 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [navScrolled, setNavScrolled] = useState(false)
-  const [expandedExp, setExpandedExp] = useState<number | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   // Handle scroll for nav background
@@ -301,43 +246,7 @@ function App() {
           </section>
 
           {/* Experience Section */}
-          <section id="experience" className="experience scroll-animate" aria-label="Work experience">
-            <h2>experience</h2>
-            <div className="exp-accordion">
-              {experiences.map((exp, index) => (
-                <article 
-                  key={index} 
-                  className={`exp-accordion-item ${expandedExp === index ? 'expanded' : ''}`}
-                >
-                  <button 
-                    className="exp-accordion-header"
-                    onClick={() => setExpandedExp(expandedExp === index ? null : index)}
-                    aria-expanded={expandedExp === index}
-                  >
-                    <div className="exp-accordion-info">
-                      <span className="exp-accordion-title">{exp.title}</span>
-                      <span className="exp-accordion-company">{exp.company}</span>
-                    </div>
-                    <div className="exp-accordion-right">
-                      <time className="exp-accordion-date">{exp.date}</time>
-                      <span className="exp-accordion-icon">{expandedExp === index ? '−' : '+'}</span>
-                    </div>
-                  </button>
-                  <div className="exp-accordion-content">
-                    <p>{exp.description}</p>
-                    {exp.highlights && (
-                      <ul>
-                        {exp.highlights.map((h, i) => <li key={i}>{h}</li>)}
-                      </ul>
-                    )}
-                    <div className="exp-accordion-tech">
-                      {exp.tech?.map((t, i) => <span key={i}>{t}</span>)}
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+          <ExperienceSection />
 
           {/* Contact Section */}
           <section id="contact" className="scroll-animate" aria-label="Contact information">
