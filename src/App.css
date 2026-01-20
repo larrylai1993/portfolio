@@ -21,10 +21,7 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Smart Hide Navigation */
-.nav.nav-hidden {
-  transform: translateY(-100%);
-}
+
 
 .nav-logo {
   font-size: 1.1rem;
@@ -246,7 +243,6 @@ a,
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Global Styles for Full Page Scroll */
 /* Global Styles for Full Page Scroll */
 html, body {
   margin: 0;

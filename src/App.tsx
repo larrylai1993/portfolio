@@ -7,113 +7,105 @@ function App() {
   const [navVisible, setNavVisible] = useState(true)
   const lastScrollY = useRef(0)
   const [navScrolled, setNavScrolled] = useState(false)
+// Static Data
+const experiences = [
+  {
+    date: '2024.07 - Present',
+    title: 'Senior Software Engineer',
+    company: 'CYBERBIZ',
+    initials: 'CB',
+    description: '零售電商 SaaS 平台後端開發',
+    highlights: ['核心系統功能開發與維護', '跨團隊協作與系統整合'],
+    tech: ['Ruby on Rails', '.NET Core', 'PostgreSQL', 'Redis']
+  },
+  {
+    date: '2022.11 - 2024.06',
+    title: 'System Analyst',
+    company: 'NEC Taiwan',
+    initials: 'NEC',
+    description: '主導核心系統架構設計與 Full-stack 開發',
+    highlights: ['Microservices 架構設計', 'CI/CD Pipeline 建置'],
+    tech: ['.NET Core', 'Angular', 'MSSQL', 'Docker']
+  },
+  {
+    date: '2021.03 - 2022.11',
+    title: 'PM / System Engineer',
+    company: 'Jardine Restaurant',
+    initials: 'JRG',
+    description: '系統產品規劃與專案管理',
+    highlights: ['產品規劃與時程管理', 'RPA 導入與流程自動化'],
+    tech: ['.NET Core', 'Vue', 'MSSQL']
+  },
+  {
+    date: '2019.12 - 2021.03',
+    title: 'Application Developer',
+    company: 'Bluebell Group',
+    initials: 'BB',
+    description: '.NET Framework → .NET Core Migration',
+    highlights: ['核心模組開發', 'Database 效能調校'],
+    tech: ['.NET Core', 'MSSQL', 'Entity Framework']
+  },
+  {
+    date: '2018.01 - 2019.12',
+    title: 'MES Engineer',
+    company: 'Chroma ATE',
+    initials: 'CA',
+    description: '製造業 MES 系統導入',
+    highlights: ['設備整合與資料交握', 'Real-time 監控系統開發'],
+    tech: ['.NET Framework', 'MSSQL', 'Oracle']
+  },
+  {
+    date: '2016.08 - 2018.01',
+    title: 'System Engineer',
+    company: 'Chian Kuo Enterprise',
+    initials: 'CK',
+    description: 'ERP / HRIS 系統開發維護',
+    highlights: ['跨廠區系統開發與整合', 'Report 效能優化'],
+    tech: ['.NET Framework', 'VB.NET', 'MSSQL']
+  }
+]
+
+const skills = [
+  {
+    category: 'Backend',
+    items: ['.NET Core', 'C#', 'Ruby on Rails', 'Node.js', 'REST API']
+  },
+  {
+    category: 'Database',
+    items: ['SQL Server', 'PostgreSQL', 'MySQL', 'Redis']
+  },
+  {
+    category: 'Architecture',
+    items: ['Microservices', 'DDD', 'Event-Driven']
+  },
+  {
+    category: 'DevOps',
+    items: ['Docker', 'CI/CD', 'Git', 'Azure DevOps', 'UiPath']
+  },
+  {
+    category: 'Domain',
+    items: ['MES', 'ERP', 'HRIS', 'Retail SaaS', 'POS']
+  },
+  {
+    category: 'SoftSkills',
+    items: ['System Analysis', 'Communication', 'PM']
+  }
+]
+
+function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
+  const [navScrolled, setNavScrolled] = useState(false)
   const [expandedExp, setExpandedExp] = useState<number | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
-  const experiences = [
-    {
-      date: '2024.07 - Present',
-      title: 'Senior Software Engineer',
-      company: 'CYBERBIZ',
-      initials: 'CB',
-      description: '零售電商 SaaS 平台後端開發',
-      highlights: ['核心系統功能開發與維護', '跨團隊協作與系統整合'],
-      tech: ['Ruby on Rails', '.NET Core', 'PostgreSQL', 'Redis']
-    },
-    {
-      date: '2022.11 - 2024.06',
-      title: 'System Analyst',
-      company: 'NEC Taiwan',
-      initials: 'NEC',
-      description: '主導核心系統架構設計與 Full-stack 開發',
-      highlights: ['Microservices 架構設計', 'CI/CD Pipeline 建置'],
-      tech: ['.NET Core', 'Angular', 'MSSQL', 'Docker']
-    },
-    {
-      date: '2021.03 - 2022.11',
-      title: 'PM / System Engineer',
-      company: 'Jardine Restaurant',
-      initials: 'JRG',
-      description: '系統產品規劃與專案管理',
-      highlights: ['產品規劃與時程管理', 'RPA 導入與流程自動化'],
-      tech: ['.NET Core', 'Vue', 'MSSQL']
-    },
-    {
-      date: '2019.12 - 2021.03',
-      title: 'Application Developer',
-      company: 'Bluebell Group',
-      initials: 'BB',
-      description: '.NET Framework → .NET Core Migration',
-      highlights: ['核心模組開發', 'Database 效能調校'],
-      tech: ['.NET Core', 'MSSQL', 'Entity Framework']
-    },
-    {
-      date: '2018.01 - 2019.12',
-      title: 'MES Engineer',
-      company: 'Chroma ATE',
-      initials: 'CA',
-      description: '製造業 MES 系統導入',
-      highlights: ['設備整合與資料交握', 'Real-time 監控系統開發'],
-      tech: ['.NET Framework', 'MSSQL', 'Oracle']
-    },
-    {
-      date: '2016.08 - 2018.01',
-      title: 'System Engineer',
-      company: 'Chian Kuo Enterprise',
-      initials: 'CK',
-      description: 'ERP / HRIS 系統開發維護',
-      highlights: ['跨廠區系統開發與整合', 'Report 效能優化'],
-      tech: ['.NET Framework', 'VB.NET', 'MSSQL']
-    }
-  ]
-
-  const skills = [
-    {
-      category: 'Backend',
-      items: ['.NET Core', 'C#', 'Ruby on Rails', 'Node.js', 'REST API']
-    },
-    {
-      category: 'Database',
-      items: ['SQL Server', 'PostgreSQL', 'MySQL', 'Redis']
-    },
-    {
-      category: 'Architecture',
-      items: ['Microservices', 'DDD', 'Event-Driven']
-    },
-    {
-      category: 'DevOps',
-      items: ['Docker', 'CI/CD', 'Git', 'Azure DevOps', 'UiPath']
-    },
-    {
-      category: 'Domain',
-      items: ['MES', 'ERP', 'HRIS', 'Retail SaaS', 'POS']
-    },
-    {
-      category: 'SoftSkills',
-      items: ['System Analysis', 'Communication', 'PM']
-    }
-  ]
-
-  // Handle scroll for nav background and visibility
+  // Handle scroll for nav background
   useEffect(() => {
     const handleScroll = () => {
       const container = document.getElementById('snap-container')
       if (container) {
-        const currentScrollY = container.scrollTop
-        
         // Determine background state
-        setNavScrolled(currentScrollY > 50)
-        
-        // Determine visibility (Smart Nav)
-        if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-          // Scrolling DOWN and past threshold -> Hide
-          setNavVisible(false)
-        } else {
-          // Scrolling UP -> Show
-          setNavVisible(true)
-        }
-        
-        lastScrollY.current = currentScrollY
+        setNavScrolled(container.scrollTop > 50)
       }
     }
     
@@ -199,7 +191,7 @@ function App() {
 
       {/* Navigation */}
       <nav 
-        className={`nav ${navScrolled ? 'scrolled' : ''} ${!navVisible ? 'nav-hidden' : ''}`} 
+        className={`nav ${navScrolled ? 'scrolled' : ''}`} 
         role="navigation" 
         aria-label="Main navigation"
       >
