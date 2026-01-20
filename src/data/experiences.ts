@@ -33,11 +33,6 @@ export const experiences: Experience[] = [
         title: '客製功能分析與規劃',
         description: '負責企業客戶的深度客製需求分析，將業務邏輯轉化為系統規格並進行架構規劃。',
         tags: ['System Analysis', 'Solution Planning']
-      },
-      {
-        title: '核心效能優化',
-        description: '導入 Elasticsearch 優化搜尋體驗，並針對高併發交易進行系統效能調校。',
-        tags: ['Elasticsearch', 'Performance']
       }
     ],
     tech: ['Ruby on Rails', '.NET Core', 'PostgreSQL', 'Redis', 'Elasticsearch']

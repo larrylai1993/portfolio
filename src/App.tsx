@@ -217,12 +217,12 @@ function App() {
                   <div className="highlight-label">Years Experience</div>
                 </div>
                 <div className="highlight-card">
-                  <div className="highlight-number">6</div>
-                  <div className="highlight-label">Companies</div>
+                  <div className="highlight-number">5+</div>
+                  <div className="highlight-label">Industries Involved</div>
                 </div>
                 <div className="highlight-card">
-                  <div className="highlight-number">2</div>
-                  <div className="highlight-label">Tech Stacks</div>
+                  <div className="highlight-number">7+</div>
+                  <div className="highlight-label">Business Domains</div>
                 </div>
               </div>
             </div>
