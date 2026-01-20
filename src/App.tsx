@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './App.css'
 
-function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('')
-  const [navVisible, setNavVisible] = useState(true)
-  const lastScrollY = useRef(0)
-  const [navScrolled, setNavScrolled] = useState(false)
-// Static Data
+
 const experiences = [
   {
     date: '2024.07 - Present',
