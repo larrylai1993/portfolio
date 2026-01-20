@@ -133,6 +133,7 @@
   filter: blur(80px);
   opacity: 0.6;
   animation: float 6s ease-in-out infinite;
+  z-index: 0; /* Behind content */
 }
 
 .hero::after {
@@ -146,6 +147,7 @@
   filter: blur(80px);
   opacity: 0.5;
   animation: float 8s ease-in-out infinite reverse;
+  z-index: 0; /* Behind content */
 }
 
 .hero-name {
@@ -154,6 +156,8 @@
   color: var(--text-primary);
   margin-bottom: 0.5rem;
   animation: slideUp var(--transition-slow) var(--ease-out-expo) both;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-role {
@@ -162,6 +166,8 @@
   font-weight: 500;
   margin-bottom: 0.5rem;
   animation: slideUp var(--transition-slow) var(--ease-out-expo) 100ms both;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-stack {
@@ -169,6 +175,8 @@
   color: var(--cyan);
   margin-bottom: 1.5rem;
   animation: slideUp var(--transition-slow) var(--ease-out-expo) 200ms both;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-bio {
@@ -178,6 +186,8 @@
   line-height: 1.8;
   margin-bottom: 2rem;
   animation: slideUp var(--transition-slow) var(--ease-out-expo) 300ms both;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-buttons {
@@ -185,6 +195,8 @@
   gap: 1rem;
   margin-top: 1rem;
   animation: slideUp var(--transition-slow) var(--ease-out-expo) 500ms both;
+  position: relative;
+  z-index: 10; /* Ensure buttons are clickable */
 }
 
 .btn {
@@ -202,6 +214,7 @@
               border-color var(--transition-fast),
               background var(--transition-fast),
               color var(--transition-fast);
+  z-index: 10;
 }
 
 .btn:hover {
