@@ -829,13 +829,15 @@ section h2::before {
     padding: 0.75rem; /* Reduced padding */
   }
 
-  /* Skills Grid Compact (2x3) */
+  /* Skills Grid Compact (3x2 even on mobile for maximum density) */
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns (2x3 layout) */
-    gap: 0.5rem; /* Very tight gap */
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns on mobile too */
+    gap: 0.25rem; /* Minimal gap */
     width: 100%;
     margin: 0;
+    max-height: none; /* Reset desktop constraints */
+    overflow: visible;
   }
   
   .skill-category {
