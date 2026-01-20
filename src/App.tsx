@@ -95,10 +95,17 @@ function App() {
   // Handle scroll for nav background
   useEffect(() => {
     const handleScroll = () => {
-      setNavScrolled(window.scrollY > 50)
+      const container = document.getElementById('snap-container')
+      if (container) {
+        setNavScrolled(container.scrollTop > 50)
+      }
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    
+    // Add listener to the container instead of window
+    const container = document.getElementById('snap-container')
+    container?.addEventListener('scroll', handleScroll, { passive: true })
+    
+    return () => container?.removeEventListener('scroll', handleScroll)
   }, [])
 
   // Intersection Observer for active section
@@ -221,142 +228,145 @@ function App() {
         </ul>
       </div>
 
-      <main id="main-content">
-        {/* Hero Section */}
-        <section className="hero" aria-label="Introduction">
-          <h1 className="hero-name">Larry Lai</h1>
-          <p className="hero-role">Senior Backend Developer</p>
-          <p className="hero-stack">.NET Core • Ruby on Rails • System Analysis</p>
-          <p className="hero-bio">
-            8 年後端開發經驗，擅長系統分析與架構設計。<br />
-            從 MES、ERP 到零售 SaaS，在技術與業務之間搭建橋樑。
-          </p>
-          <div className="hero-buttons">
-            <a href="#contact" className="btn btn-primary">Contact Me</a>
-            <a href="#experience" className="btn btn-outline">View Experience</a>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section id="about" className="about scroll-animate" aria-label="About me">
-          <h2>about</h2>
-          <div className="about-content">
-            <p className="about-text">
-              從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術的演進
-              （從早期的 ASP/VB、WinForms 到現代化的 .NET Core），
-              並能在 .NET 與 Ruby on Rails 之間靈活切換。
+      {/* Scroll Container */}
+      <div className="snap-container" id="snap-container">
+        <main id="main-content">
+          {/* Hero Section */}
+          <section className="hero" aria-label="Introduction">
+            <h1 className="hero-name">Larry Lai</h1>
+            <p className="hero-role">Senior Backend Developer</p>
+            <p className="hero-stack">.NET Core • Ruby on Rails • System Analysis</p>
+            <p className="hero-bio">
+              8 年後端開發經驗，擅長系統分析與架構設計。<br />
+              從 MES、ERP 到零售 SaaS，在技術與業務之間搭建橋樑。
             </p>
-            <p className="about-text">
-              很多時候專案窒礙難行不是技術無法實現，而是需求不明確或業務流程不順。
-              我擅長處理這些模糊地帶，把每個人的意見做整合，找出破口，
-              確保交付的東西真正符合公司發展需要、也符合客戶需要。
-            </p>
-            <div className="about-highlights">
-              <div className="highlight-card">
-                <div className="highlight-number">8+</div>
-                <div className="highlight-label">Years Experience</div>
-              </div>
-              <div className="highlight-card">
-                <div className="highlight-number">6</div>
-                <div className="highlight-label">Companies</div>
-              </div>
-              <div className="highlight-card">
-                <div className="highlight-number">2</div>
-                <div className="highlight-label">Tech Stacks</div>
-              </div>
+            <div className="hero-buttons">
+              <a href="#contact" className="btn btn-primary">Contact Me</a>
+              <a href="#experience" className="btn btn-outline">View Experience</a>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Skills Section */}
-        <section id="skills" className="scroll-animate" aria-label="Technical skills">
-          <h2>skills</h2>
-          <div className="skills-grid">
-            {skills.map((skill, index) => (
-              <div key={index} className="skill-category">
-                <h3>{skill.category}</h3>
-                <div className="skill-tags" role="list">
-                  {skill.items.map((item, i) => (
-                    <span key={i} className="skill-tag" role="listitem">{item}</span>
-                  ))}
+          {/* About Section */}
+          <section id="about" className="about scroll-animate" aria-label="About me">
+            <h2>about</h2>
+            <div className="about-content">
+              <p className="about-text">
+                從傳產製造業的 MES、ERP 到零售 SaaS，完整經歷微軟技術的演進
+                （從早期的 ASP/VB、WinForms 到現代化的 .NET Core），
+                並能在 .NET 與 Ruby on Rails 之間靈活切換。
+              </p>
+              <p className="about-text">
+                很多時候專案窒礙難行不是技術無法實現，而是需求不明確或業務流程不順。
+                我擅長處理這些模糊地帶，把每個人的意見做整合，找出破口，
+                確保交付的東西真正符合公司發展需要、也符合客戶需要。
+              </p>
+              <div className="about-highlights">
+                <div className="highlight-card">
+                  <div className="highlight-number">8+</div>
+                  <div className="highlight-label">Years Experience</div>
+                </div>
+                <div className="highlight-card">
+                  <div className="highlight-number">6</div>
+                  <div className="highlight-label">Companies</div>
+                </div>
+                <div className="highlight-card">
+                  <div className="highlight-number">2</div>
+                  <div className="highlight-label">Tech Stacks</div>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
+            </div>
+          </section>
 
-        {/* Experience Section */}
-        <section id="experience" className="experience scroll-animate" aria-label="Work experience">
-          <h2>experience</h2>
-          <div className="exp-accordion">
-            {experiences.map((exp, index) => (
-              <article 
-                key={index} 
-                className={`exp-accordion-item ${expandedExp === index ? 'expanded' : ''}`}
-              >
-                <button 
-                  className="exp-accordion-header"
-                  onClick={() => setExpandedExp(expandedExp === index ? null : index)}
-                  aria-expanded={expandedExp === index}
+          {/* Skills Section */}
+          <section id="skills" className="scroll-animate" aria-label="Technical skills">
+            <h2>skills</h2>
+            <div className="skills-grid">
+              {skills.map((skill, index) => (
+                <div key={index} className="skill-category">
+                  <h3>{skill.category}</h3>
+                  <div className="skill-tags" role="list">
+                    {skill.items.map((item, i) => (
+                      <span key={i} className="skill-tag" role="listitem">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Experience Section */}
+          <section id="experience" className="experience scroll-animate" aria-label="Work experience">
+            <h2>experience</h2>
+            <div className="exp-accordion">
+              {experiences.map((exp, index) => (
+                <article 
+                  key={index} 
+                  className={`exp-accordion-item ${expandedExp === index ? 'expanded' : ''}`}
                 >
-                  <div className="exp-accordion-info">
-                    <span className="exp-accordion-title">{exp.title}</span>
-                    <span className="exp-accordion-company">{exp.company}</span>
+                  <button 
+                    className="exp-accordion-header"
+                    onClick={() => setExpandedExp(expandedExp === index ? null : index)}
+                    aria-expanded={expandedExp === index}
+                  >
+                    <div className="exp-accordion-info">
+                      <span className="exp-accordion-title">{exp.title}</span>
+                      <span className="exp-accordion-company">{exp.company}</span>
+                    </div>
+                    <div className="exp-accordion-right">
+                      <time className="exp-accordion-date">{exp.date}</time>
+                      <span className="exp-accordion-icon">{expandedExp === index ? '−' : '+'}</span>
+                    </div>
+                  </button>
+                  <div className="exp-accordion-content">
+                    <p>{exp.description}</p>
+                    {exp.highlights && (
+                      <ul>
+                        {exp.highlights.map((h, i) => <li key={i}>{h}</li>)}
+                      </ul>
+                    )}
+                    <div className="exp-accordion-tech">
+                      {exp.tech?.map((t, i) => <span key={i}>{t}</span>)}
+                    </div>
                   </div>
-                  <div className="exp-accordion-right">
-                    <time className="exp-accordion-date">{exp.date}</time>
-                    <span className="exp-accordion-icon">{expandedExp === index ? '−' : '+'}</span>
-                  </div>
-                </button>
-                <div className="exp-accordion-content">
-                  <p>{exp.description}</p>
-                  {exp.highlights && (
-                    <ul>
-                      {exp.highlights.map((h, i) => <li key={i}>{h}</li>)}
-                    </ul>
-                  )}
-                  <div className="exp-accordion-tech">
-                    {exp.tech?.map((t, i) => <span key={i}>{t}</span>)}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="scroll-animate" aria-label="Contact information">
-          <h2>contact</h2>
-          <div className="contact-content">
-            <p className="contact-text">
-              對合作機會有興趣？歡迎透過以下方式聯繫我。
-            </p>
-            <div className="contact-links">
-              <a 
-                href="mailto:abc081259@gmail.com" 
-                className="contact-link"
-                aria-label="Send email to abc081259@gmail.com"
-              >
-                ✉️ abc081259@gmail.com
-              </a>
-              <a
-                href="https://www.linkedin.com/in/larrylai622"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-link"
-                aria-label="Visit LinkedIn profile (opens in new tab)"
-              >
-                💼 linkedin.com/in/larrylai622
-              </a>
+                </article>
+              ))}
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
 
-      {/* Footer */}
-      <footer className="footer" role="contentinfo">
-        <p>© {new Date().getFullYear()} Larry Lai | Built with React + Vite</p>
-      </footer>
+          {/* Contact Section */}
+          <section id="contact" className="scroll-animate" aria-label="Contact information">
+            <h2>contact</h2>
+            <div className="contact-content">
+              <p className="contact-text">
+                對合作機會有興趣？歡迎透過以下方式聯繫我。
+              </p>
+              <div className="contact-links">
+                <a 
+                  href="mailto:abc081259@gmail.com" 
+                  className="contact-link"
+                  aria-label="Send email to abc081259@gmail.com"
+                >
+                  ✉️ abc081259@gmail.com
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/larrylai622"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-link"
+                  aria-label="Visit LinkedIn profile (opens in new tab)"
+                >
+                  💼 linkedin.com/in/larrylai622
+                </a>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        {/* Footer */}
+        <footer className="footer" role="contentinfo">
+          <p>© {new Date().getFullYear()} Larry Lai | Built with React + Vite</p>
+        </footer>
+      </div>
     </>
   )
 }
