@@ -86,18 +86,29 @@
   padding: 1.5rem;
   transition: all 0.3s ease;
   position: relative;
+  cursor: pointer; /* Clickable */
 }
 
-.timeline-item:hover .timeline-content {
-  background: rgba(35, 35, 35, 0.9);
+.timeline-content:hover {
+  background: rgba(35, 35, 35, 0.8);
   border-color: rgba(255, 255, 255, 0.15);
-  transform: translateX(5px);
+}
+
+.timeline-content.expanded {
+  background: rgba(40, 40, 40, 0.95);
+  border-color: var(--accent);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Job Header */
 .job-header {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0; /* Removing bottom margin to tightly close */
+}
+
+.job-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .job-title {
@@ -106,15 +117,20 @@
   margin-bottom: 0.25rem;
 }
 
+.accordion-icon {
+  color: var(--accent);
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.accordion-icon.expanded {
+  transform: rotate(180deg);
+}
+
 .job-company {
   font-family: 'Fira Code', monospace;
   color: var(--text-secondary);
   font-size: 0.9rem;
-}
-
-.job-type {
-  color: var(--green); /* Using a "String" color or similar */
-  opacity: 0.7;
 }
 
 /* Description */
@@ -127,6 +143,22 @@
   font-family: 'Fira Code', monospace;
   font-size: 0.9rem;
   display: block;
+}
+
+/* Experience Details (Collapsible) */
+.experience-details {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding-top 0.3s ease;
+}
+
+.timeline-content.expanded .experience-details {
+  max-height: 2000px; /* Arbitrary large height */
+  opacity: 1;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 1rem;
 }
 
 /* Impact Grid */
