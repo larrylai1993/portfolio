@@ -20,6 +20,88 @@
     <title>Larry Lai | Senior Backend Developer</title>
   </head>
   <body>
+    <!-- Terminal Loader -->
+    <style>
+      #app-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'JetBrains Mono', monospace;
+        transition: opacity 0.5s ease-out, visibility 0.5s;
+      }
+      .loader-content {
+        color: #a9b7c6;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .cmd-line {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .cmd-prompt { color: #cc7832; } /* Orange keyword style */
+      .cmd-path { color: #6a8759; }   /* Green string style */
+      .blink-cursor {
+        display: inline-block;
+        width: 8px;
+        height: 16px;
+        background-color: #a9b7c6;
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        50% { opacity: 0; }
+      }
+      /* Hide loader when app is ready */
+      body.loaded #app-loader {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .loading-bar-container {
+        width: 200px;
+        height: 2px;
+        background: #333;
+        margin-top: 15px;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .loading-bar {
+        width: 0%;
+        height: 100%;
+        background: #6a8759; /* Green */
+        animation: load 1.4s ease-in-out forwards;
+        box-shadow: 0 0 10px rgba(106, 135, 89, 0.5);
+      }
+      @keyframes load {
+        0% { width: 0%; }
+        50% { width: 70%; }
+        100% { width: 100%; }
+      }
+    </style>
+    <div id="app-loader">
+      <div class="loader-content">
+        <div class="cmd-line">
+          <span class="cmd-prompt">➜</span>
+          <span class="cmd-path">~</span>
+          <span>initializing system...</span>
+        </div>
+        <div class="cmd-line" style="margin-top: 5px">
+          <span class="cmd-prompt">➜</span>
+          <span class="cmd-path">~</span>
+          <span>loading modules...</span>
+        </div>
+        <div class="loading-bar-container">
+          <div class="loading-bar"></div>
+        </div>
+      </div>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

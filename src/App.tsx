@@ -40,6 +40,11 @@ function App() {
 
   // Handle scroll for nav background
   useEffect(() => {
+    // Simulate initialization time for the cool loader effect
+    const loaderTimeout = setTimeout(() => {
+      document.body.classList.add('loaded')
+    }, 1500) // 1.5s delay to show off the loader
+
     const handleScroll = () => {
       const container = document.getElementById('snap-container')
       if (container) {
@@ -52,7 +57,10 @@ function App() {
     const container = document.getElementById('snap-container')
     container?.addEventListener('scroll', handleScroll, { passive: true })
     
-    return () => container?.removeEventListener('scroll', handleScroll)
+    return () => {
+      container?.removeEventListener('scroll', handleScroll)
+      clearTimeout(loaderTimeout)
+    }
   }, [])
 
   // Intersection Observer for active section
