@@ -26,8 +26,12 @@ export const initGA4 = (): void => {
 
   // Initialize dataLayer and gtag function
   window.dataLayer = window.dataLayer || []
-  window.gtag = window.gtag || function(...args: unknown[]) {
-    window.dataLayer.push(args)
+  // Must use function() to access arguments object (not arrow function)
+  if (!window.gtag) {
+    window.gtag = function() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments)
+    }
   }
 
   window.gtag('js', new Date())
