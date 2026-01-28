@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import ExperienceSection from './components/ExperienceSection'
+import { trackPageView, trackEvent } from './utils/ga4'
 import './App.css'
 
 
@@ -38,6 +39,11 @@ function App() {
   const [navScrolled, setNavScrolled] = useState(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
+  // Track initial page view
+  useEffect(() => {
+    trackPageView(window.location.pathname + window.location.search, document.title)
+  }, [])
+
   // Handle scroll for nav background
   useEffect(() => {
     // Simulate initialization time for the cool loader effect
@@ -71,7 +77,13 @@ function App() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            const sectionId = entry.target.id
+            setActiveSection(sectionId)
+            // Track section view
+            trackEvent('section_view', {
+              section_id: sectionId,
+              section_name: entry.target.querySelector('h2')?.textContent || sectionId
+            })
           }
         })
       },
@@ -200,8 +212,20 @@ function App() {
               從 MES、ERP 到零售 SaaS，在技術與業務之間搭建橋樑。
             </p>
             <div className="hero-buttons">
-              <a href="#contact" className="btn btn-primary">Contact Me</a>
-              <a href="#experience" className="btn btn-outline">View Experience</a>
+              <a 
+                href="#contact" 
+                className="btn btn-primary"
+                onClick={() => trackEvent('cta_click', { type: 'contact' })}
+              >
+                Contact Me
+              </a>
+              <a 
+                href="#experience" 
+                className="btn btn-outline"
+                onClick={() => trackEvent('cta_click', { type: 'experience' })}
+              >
+                View Experience
+              </a>
             </div>
           </section>
 
@@ -268,6 +292,7 @@ function App() {
                   href="mailto:abc081259@gmail.com" 
                   className="contact-link"
                   aria-label="Send email to abc081259@gmail.com"
+                  onClick={() => trackEvent('contact_click', { type: 'email' })}
                 >
                   ✉️ abc081259@gmail.com
                 </a>
@@ -277,6 +302,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="contact-link"
                   aria-label="Visit LinkedIn profile (opens in new tab)"
+                  onClick={() => trackEvent('contact_click', { type: 'linkedin' })}
                 >
                   💼 linkedin.com/in/larrylai622
                 </a>
